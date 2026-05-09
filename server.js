@@ -10,6 +10,11 @@ app.use(cors({
 }));
 app.use(express.json());
 
+// Health check route
+app.get('/', (req, res) => {
+  res.json({ status: 'API is running!' });
+});
+
 // Database Connection
 mongoose.connect(process.env.MONGODB_URI)
   .then(() => console.log('─── MongoDB Connected'))
@@ -58,6 +63,6 @@ app.delete('/api/messages/:id', async (req, res) => {
 });
 
 const PORT = process.env.PORT || 5000;
-app.listen(PORT, () => {
-  console.log(`─── Server started on http://localhost:${PORT}`);
+app.listen(PORT, '0.0.0.0', () => {
+  console.log(`─── Server started on port ${PORT}`);
 });
