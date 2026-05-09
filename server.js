@@ -5,9 +5,17 @@ const mongoose = require('mongoose');
 
 const app = express();
 
+// UPDATED: Explicit CORS configuration for GitHub Pages
 app.use(cors({
-  origin: process.env.FRONTEND_URL || '*'
+  origin: [
+    'https://amistadsit-kevs.github.io', // Your live GitHub Pages URL
+    'http://localhost:5173',             // Your local development
+    'http://localhost:3000'
+  ],
+  methods: ['GET', 'POST', 'DELETE', 'PUT'],
+  credentials: true
 }));
+
 app.use(express.json());
 
 // Health check route
@@ -20,13 +28,13 @@ mongoose.connect(process.env.MONGODB_URI)
   .then(() => console.log('─── MongoDB Connected'))
   .catch(err => console.error('─── Connection Error:', err.message));
 
-// Schema & Model
+// UPDATED: Explicitly naming the collection to match image_f07df1.png
 const contactSchema = new mongoose.Schema({
   name:    { type: String, required: true },
   email:   { type: String, required: true },
   message: { type: String, required: true },
   date:    { type: Date, default: Date.now }
-});
+}, { collection: 'contacts' }); // Matches the plural collection in your screenshot
 
 const Contact = mongoose.model('Contact', contactSchema);
 
