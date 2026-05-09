@@ -8,7 +8,7 @@ const app = express();
 // UPDATED: Explicit CORS configuration for GitHub Pages
 app.use(cors({
   origin: [
-    'https://amistadsit-kevs.github.io', // Your live GitHub Pages URL
+    'https://bulciosif-student.github.io', // Your live GitHub Pages URL
     'http://localhost:5173',             // Your local development
     'http://localhost:3000'
   ],
@@ -39,7 +39,7 @@ const contactSchema = new mongoose.Schema({
 const Contact = mongoose.model('Contact', contactSchema);
 
 // 1. CREATE: Save a new message from the contact form
-app.post('/api/contact', async (req, res) => {
+app.post('/api/contacts', async (req, res) => {
   const { name, email, message } = req.body;
   try {
     const newContact = new Contact({ name, email, message });
